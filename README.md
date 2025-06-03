@@ -36,5 +36,19 @@ The easiest way to deploy your Next.js app is to use the [Vercel Platform](https
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
 
 ## API動作確認
+```
 $ npm run dev
 $ curl http://localhost:3000/api/users
+```
+
+## TODO
+* [ ] 一覧画面実装
+* [ ] Vercelデプロイ
+* [ ] 登録API実装
+* [ ] 更新API実装
+* [ ] 削除API実装
+* [ ] 詳細取得API実装
+* [ ] 登録画面実装
+* [ ] 更新画面実装
+* [ ] 削除画面実装
+* [ ] 詳細画面実装
