@@ -43,7 +43,6 @@ $ curl http://localhost:3000/api/users
 
 ## TODO
 ### MUST
-* [ ] Vercelデプロイ
 
 ### WANT
 * CRUD API
