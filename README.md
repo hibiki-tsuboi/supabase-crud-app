@@ -41,6 +41,9 @@ $ npm run dev
 $ curl http://localhost:3000/api/users
 ```
 
+## URL
+https://supabase-crud-app-61cu.vercel.app/
+
 ## TODO
 ### MUST
 

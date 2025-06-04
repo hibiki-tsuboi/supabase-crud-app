@@ -91,7 +91,7 @@ export default function Home() {
             <div className="p-3 bg-indigo-600 rounded-xl">
               <User className="w-8 h-8 text-white" />
             </div>
-            <h1 className="text-4xl font-bold text-gray-900">ユーザー管理v2</h1>
+            <h1 className="text-4xl font-bold text-gray-900">ユーザー管理</h1>
           </div>
           <p className="text-lg text-gray-600">Supabase CRUD アプリケーション</p>
         </div>
