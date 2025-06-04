@@ -43,12 +43,10 @@ $ curl http://localhost:3000/api/users
 
 ## TODO
 ### MUST
-* [ ] 一覧画面実装
 * [ ] Vercelデプロイ
 
 ### WANT
 * CRUD API
-    * [ ] 登録API実装
     * [ ] 更新API実装
     * [ ] 削除API実装
     * [ ] 詳細取得API実装
