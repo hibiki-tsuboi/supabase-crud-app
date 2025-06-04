@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import { User, Plus, Mail, UserIcon, Trash2, RefreshCw } from 'lucide-react'
+import { User, Plus, Mail, UserIcon, RefreshCw } from 'lucide-react'
 
 interface UserData {
   id: number
@@ -68,8 +68,9 @@ export default function Home() {
       setName('')
       setEmail('')
       fetchUsers() // ユーザー一覧を再取得
-    } catch (err: any) {
-      setError(err.message || 'ユーザーの追加に失敗しました')
+    } catch (err) {
+      const errorMessage = err instanceof Error ? err.message : 'ユーザーの追加に失敗しました'
+      setError(errorMessage)
       console.error('Error adding user:', err)
     } finally {
       setFormLoading(false)
