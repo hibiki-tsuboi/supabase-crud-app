@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import { User, Plus, Mail, UserIcon, RefreshCw } from 'lucide-react'
+import { User, Plus, Mail, UserIcon, RefreshCw, Trash2 } from 'lucide-react'
 
 interface UserData {
   id: number
@@ -74,6 +74,26 @@ export default function Home() {
       console.error('Error adding user:', err)
     } finally {
       setFormLoading(false)
+    }
+  }
+
+  // ユーザーを削除
+  const deleteUser = async (id: number) => {
+    if (!confirm('このユーザーを削除しますか？')) return
+    setError('')
+    setSuccess('')
+    try {
+      const response = await fetch(`/api/users?id=${id}`, { method: 'DELETE' })
+      if (!response.ok) {
+        const errorData = await response.json()
+        throw new Error(errorData.error || 'Failed to delete user')
+      }
+      setSuccess('ユーザーを削除しました')
+      fetchUsers()
+    } catch (err) {
+      const errorMessage = err instanceof Error ? err.message : 'ユーザーの削除に失敗しました'
+      setError(errorMessage)
+      console.error('Error deleting user:', err)
     }
   }
 
@@ -219,8 +239,15 @@ export default function Home() {
                           </p>
                         </div>
                       </div>
-                      <div className="text-xs text-gray-400">
-                        ID: {user.id}
+                      <div className="flex items-center gap-2 text-xs text-gray-400">
+                        <span>ID: {user.id}</span>
+                        <button
+                          onClick={() => deleteUser(user.id)}
+                          className="p-1 text-red-500 hover:bg-red-50 rounded"
+                          title="削除"
+                        >
+                          <Trash2 className="w-4 h-4" />
+                        </button>
                       </div>
                     </div>
                     {user.created_at && (
@@ -251,7 +278,7 @@ export default function Home() {
                 <Plus className="w-5 h-5 text-green-600" />
                 <span className="text-sm font-medium text-green-600">API</span>
               </div>
-              <p className="text-lg font-semibold text-green-900 mt-1">GET / POST</p>
+              <p className="text-lg font-semibold text-green-900 mt-1">GET / POST / DELETE</p>
             </div>
             <div className="bg-purple-50 p-4 rounded-lg">
               <div className="flex items-center gap-2">

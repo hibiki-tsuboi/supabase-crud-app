@@ -42,6 +42,26 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     }
   }
 
-  res.setHeader('Allow', ['GET', 'POST'])
+  if (req.method === 'DELETE') {
+    console.log('[handler]DELETE')
+    const { id } = req.query
+    if (!id || Array.isArray(id)) {
+      return res.status(400).json({ error: 'Invalid user id' })
+    }
+    try {
+      const { error } = await supabase.from('users').delete().eq('id', id)
+      console.log('[handler]supabase delete response:', { error })
+      if (error) {
+        console.error('[handler]supabase delete error:', error)
+        return res.status(500).json({ error: error.message })
+      }
+      return res.status(200).json({ message: 'User deleted successfully' })
+    } catch (err) {
+      console.error('[handler]unexpected delete error:', err)
+      return res.status(500).json({ error: 'Internal server error' })
+    }
+  }
+
+  res.setHeader('Allow', ['GET', 'POST', 'DELETE'])
   res.status(405).end(`Method ${req.method} Not Allowed`)
 }
