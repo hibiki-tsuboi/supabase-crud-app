@@ -127,4 +127,22 @@ test.describe('User Management - E2E Smoke Tests', () => {
     // Should handle gracefully (no crash)
     await expect(page.getByRole('heading', { name: 'ユーザー管理' })).toBeVisible();
   });
+
+  test('Specific user detail page loads - ddc63b72-b8c4-4888-9fd2-c0a4d1c266cd', async ({ page }) => {
+    // Navigate directly to specific user detail page
+    await page.goto('/users/ddc63b72-b8c4-4888-9fd2-c0a4d1c266cd');
+    
+    // Check detail page loads
+    await expect(page.getByRole('heading', { name: 'ユーザー詳細' })).toBeVisible();
+    
+    // Check that user name "Tsuboi" is displayed
+    await expect(page.locator('h2').filter({ hasText: 'Tsuboi' })).toBeVisible();
+    
+    // Check action buttons are present
+    await expect(page.getByRole('button', { name: '編集' })).toBeVisible();
+    await expect(page.getByRole('button', { name: '削除' })).toBeVisible();
+    
+    // Check navigation back works
+    await expect(page.getByText('ユーザー管理に戻る')).toBeVisible();
+  });
 });
