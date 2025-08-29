@@ -50,11 +50,11 @@ https://supabase-crud-app-61cu.vercel.app/
 ### WANT
 * CRUD API
     * [ ] 更新API実装
-    * [ ] 削除API実装
+    * [x] 削除API実装
     * [ ] 詳細取得API実装
 * CRUD 画面
     * [ ] 登録画面実装
     * [ ] 更新画面実装
-    * [ ] 削除画面実装
+    * [x] 削除画面実装
     * [ ] 詳細画面実装
 * [ ] 認証機能実装
