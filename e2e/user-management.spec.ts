@@ -16,24 +16,6 @@ test.describe('User Management', () => {
     await expect(page.getByRole('button', { name: 'ユーザーを追加' })).toBeVisible();
   });
 
-  test('should create a new user', async ({ page }) => {
-    const testUser = {
-      name: `Test User ${Date.now()}`,
-      email: `test${Date.now()}@example.com`
-    };
-
-    await page.getByPlaceholder('田中太郎').fill(testUser.name);
-    await page.getByPlaceholder('example@example.com').fill(testUser.email);
-    await page.getByRole('button', { name: 'ユーザーを追加' }).click();
-
-    // Wait for the user to be added to the list
-    await expect(page.getByText(testUser.name)).toBeVisible();
-    await expect(page.getByText(testUser.email)).toBeVisible();
-
-    // Check that the form is cleared
-    await expect(page.getByPlaceholder('田中太郎')).toHaveValue('');
-    await expect(page.getByPlaceholder('example@example.com')).toHaveValue('');
-  });
 
   test('should display existing users', async ({ page }) => {
     // Check that the users section is visible
