@@ -93,7 +93,6 @@ export default function Home() {
             </div>
             <h1 className="text-4xl font-bold text-gray-900">ユーザー管理</h1>
           </div>
-          <p className="text-lg text-gray-600">Supabase CRUD アプリケーション</p>
         </div>
 
         {/* エラー・成功メッセージ */}
