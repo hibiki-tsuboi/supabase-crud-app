@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, useEffect } from 'react'
+import { useRouter } from 'next/navigation'
 import { User, Plus, Mail, UserIcon, RefreshCw, Trash2 } from 'lucide-react'
 
 interface UserData {
@@ -11,11 +12,9 @@ interface UserData {
 }
 
 export default function Home() {
+  const router = useRouter()
   const [users, setUsers] = useState<UserData[]>([])
   const [loading, setLoading] = useState(false)
-  const [formLoading, setFormLoading] = useState(false)
-  const [name, setName] = useState('')
-  const [email, setEmail] = useState('')
   const [error, setError] = useState('')
   const [success, setSuccess] = useState('')
 
@@ -38,44 +37,6 @@ export default function Home() {
     }
   }
 
-  // 新しいユーザーを追加
-  const addUser = async (e: React.FormEvent) => {
-    e.preventDefault()
-    if (!name.trim() || !email.trim()) {
-      setError('名前とメールアドレスは必須です')
-      return
-    }
-
-    setFormLoading(true)
-    setError('')
-    setSuccess('')
-
-    try {
-      const response = await fetch('/api/users', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ name: name.trim(), email: email.trim() }),
-      })
-
-      if (!response.ok) {
-        const errorData = await response.json()
-        throw new Error(errorData.error || 'Failed to add user')
-      }
-
-      setSuccess('ユーザーが正常に追加されました！')
-      setName('')
-      setEmail('')
-      fetchUsers() // ユーザー一覧を再取得
-    } catch (err) {
-      const errorMessage = err instanceof Error ? err.message : 'ユーザーの追加に失敗しました'
-      setError(errorMessage)
-      console.error('Error adding user:', err)
-    } finally {
-      setFormLoading(false)
-    }
-  }
 
   // ユーザーを削除
   const deleteUser = async (id: number) => {
@@ -127,71 +88,9 @@ export default function Home() {
           </div>
         )}
 
-        <div className="grid lg:grid-cols-2 gap-8">
-          {/* ユーザー追加フォーム */}
-          <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
-            <div className="flex items-center gap-3 mb-6">
-              <div className="p-2 bg-green-100 rounded-lg">
-                <Plus className="w-5 h-5 text-green-600" />
-              </div>
-              <h2 className="text-xl font-semibold text-gray-900">新しいユーザーを追加</h2>
-            </div>
-            
-            <form onSubmit={addUser} className="space-y-4">
-              <div>
-                <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-2">
-                  <UserIcon className="w-4 h-4 inline mr-2" />
-                  名前
-                </label>
-                <input
-                  type="text"
-                  id="name"
-                  value={name}
-                  onChange={(e) => setName(e.target.value)}
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-colors"
-                  placeholder="田中太郎"
-                  required
-                />
-              </div>
-              
-              <div>
-                <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">
-                  <Mail className="w-4 h-4 inline mr-2" />
-                  メールアドレス
-                </label>
-                <input
-                  type="email"
-                  id="email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-colors"
-                  placeholder="example@example.com"
-                  required
-                />
-              </div>
-              
-              <button
-                type="submit"
-                disabled={formLoading}
-                className="w-full bg-indigo-600 text-white py-3 px-4 rounded-lg hover:bg-indigo-700 focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
-              >
-                {formLoading ? (
-                  <>
-                    <RefreshCw className="w-4 h-4 animate-spin" />
-                    追加中...
-                  </>
-                ) : (
-                  <>
-                    <Plus className="w-4 h-4" />
-                    ユーザーを追加
-                  </>
-                )}
-              </button>
-            </form>
-          </div>
 
-          {/* ユーザー一覧 */}
-          <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+        {/* ユーザー一覧 */}
+        <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
             <div className="flex items-center justify-between mb-6">
               <div className="flex items-center gap-3">
                 <div className="p-2 bg-blue-100 rounded-lg">
@@ -199,14 +98,23 @@ export default function Home() {
                 </div>
                 <h2 className="text-xl font-semibold text-gray-900">ユーザー一覧</h2>
               </div>
-              <button
-                onClick={fetchUsers}
-                disabled={loading}
-                className="p-2 text-gray-500 hover:text-gray-700 hover:bg-gray-100 rounded-lg transition-colors disabled:opacity-50"
-                title="更新"
-              >
-                <RefreshCw className={`w-5 h-5 ${loading ? 'animate-spin' : ''}`} />
-              </button>
+              <div className="flex items-center gap-2">
+                <button
+                  onClick={() => router.push('/users/add')}
+                  className="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 transition-colors flex items-center gap-2"
+                >
+                  <Plus className="w-4 h-4" />
+                  追加
+                </button>
+                <button
+                  onClick={fetchUsers}
+                  disabled={loading}
+                  className="p-2 text-gray-500 hover:text-gray-700 hover:bg-gray-100 rounded-lg transition-colors disabled:opacity-50"
+                  title="更新"
+                >
+                  <RefreshCw className={`w-5 h-5 ${loading ? 'animate-spin' : ''}`} />
+                </button>
+              </div>
             </div>
 
             {loading ? (
@@ -217,7 +125,7 @@ export default function Home() {
               <div className="text-center py-12">
                 <User className="w-12 h-12 text-gray-300 mx-auto mb-4" />
                 <p className="text-gray-500">まだユーザーが登録されていません</p>
-                <p className="text-sm text-gray-400 mt-1">左のフォームから新しいユーザーを追加してください</p>
+                <p className="text-sm text-gray-400 mt-1">上のボタンから新しいユーザーを追加してください</p>
               </div>
             ) : (
               <div className="space-y-3">
@@ -259,7 +167,6 @@ export default function Home() {
                 ))}
               </div>
             )}
-          </div>
         </div>
 
         {/* 統計情報 */}
