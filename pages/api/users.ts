@@ -12,7 +12,14 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   if (req.method === 'GET') {
     console.log('[handler]GET')
     try {
-      const { data, error } = await supabase.from('users').select('*')
+      const { id } = req.query
+      let query = supabase.from('users').select('*')
+      
+      if (id && !Array.isArray(id)) {
+        query = query.eq('id', id)
+      }
+      
+      const { data, error } = await query
       console.log('[handler]supabase response:', { data, error })
       if (error) {
         console.error('[handler]supabase error:', error)
@@ -42,6 +49,30 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     }
   }
 
+  if (req.method === 'PUT') {
+    console.log('[handler]PUT')
+    const { id, name, email } = req.body
+    if (!id) {
+      return res.status(400).json({ error: 'User ID is required' })
+    }
+    try {
+      const { data, error } = await supabase
+        .from('users')
+        .update({ name, email })
+        .eq('id', id)
+        .select()
+      console.log('[handler]supabase update response:', { data, error })
+      if (error) {
+        console.error('[handler]supabase update error:', error)
+        return res.status(500).json({ error: error.message })
+      }
+      return res.status(200).json(data)
+    } catch (err) {
+      console.error('[handler]unexpected update error:', err)
+      return res.status(500).json({ error: 'Internal server error' })
+    }
+  }
+
   if (req.method === 'DELETE') {
     console.log('[handler]DELETE')
     const { id } = req.query
@@ -62,6 +93,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     }
   }
 
-  res.setHeader('Allow', ['GET', 'POST', 'DELETE'])
+  res.setHeader('Allow', ['GET', 'POST', 'PUT', 'DELETE'])
   res.status(405).end(`Method ${req.method} Not Allowed`)
 }

@@ -132,7 +132,8 @@ export default function Home() {
                 {users.map((user) => (
                   <div
                     key={user.id}
-                    className="p-4 border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors"
+                    onClick={() => router.push(`/users/${user.id}`)}
+                    className="p-4 border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors cursor-pointer"
                   >
                     <div className="flex items-center justify-between">
                       <div className="flex items-center gap-3">
@@ -150,7 +151,10 @@ export default function Home() {
                       <div className="flex items-center gap-2 text-xs text-gray-400">
                         <span>ID: {user.id}</span>
                         <button
-                          onClick={() => deleteUser(user.id)}
+                          onClick={(e) => {
+                            e.stopPropagation()
+                            deleteUser(user.id)
+                          }}
                           className="p-1 text-red-500 hover:bg-red-50 rounded"
                           title="削除"
                         >
