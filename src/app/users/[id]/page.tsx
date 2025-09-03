@@ -92,7 +92,7 @@ export default function UserDetail() {
             className="flex items-center gap-2 text-gray-600 hover:text-gray-800 transition-colors mb-4"
           >
             <ArrowLeft className="w-4 h-4" />
-            ユーザー管理に戻る
+            ユーザー管理v2に戻る
           </button>
           
           <div className="bg-red-50 border border-red-200 rounded-lg p-6 text-center">
@@ -119,7 +119,7 @@ export default function UserDetail() {
             className="flex items-center gap-2 text-gray-600 hover:text-gray-800 transition-colors mb-4"
           >
             <ArrowLeft className="w-4 h-4" />
-            ユーザー管理に戻る
+            ユーザー管理v2に戻る
           </button>
           
           <div className="text-center">
@@ -141,7 +141,7 @@ export default function UserDetail() {
         {success && (
           <div className="mb-6 p-4 bg-green-50 border border-green-200 rounded-lg">
             <p className="text-green-800">{success}</p>
-            <p className="text-green-600 text-sm mt-1">2秒後にユーザー管理画面に戻ります...</p>
+            <p className="text-green-600 text-sm mt-1">2秒後にユーザー管理v2画面に戻ります...</p>
           </div>
         )}
 

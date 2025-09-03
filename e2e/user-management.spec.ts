@@ -8,7 +8,7 @@ test.describe('User Management - E2E Smoke Tests', () => {
   test('Home page loads successfully', async ({ page }) => {
     // Check page loads
     await expect(page).toHaveTitle(/Create Next App/);
-    await expect(page.getByRole('heading', { name: 'ユーザー管理' })).toBeVisible();
+    await expect(page.getByRole('heading', { name: 'ユーザー管理v2' })).toBeVisible();
     
     // Check main components are present
     await expect(page.getByRole('heading', { name: 'ユーザー一覧' })).toBeVisible();
@@ -29,7 +29,7 @@ test.describe('User Management - E2E Smoke Tests', () => {
     await expect(page.getByRole('button', { name: 'ユーザーを追加' })).toBeVisible();
     
     // Check navigation back works
-    await expect(page.getByText('ユーザー管理に戻る')).toBeVisible();
+    await expect(page.getByText('ユーザー管理v2に戻る')).toBeVisible();
   });
 
   test('User detail page navigation and loads', async ({ page }) => {
@@ -50,7 +50,7 @@ test.describe('User Management - E2E Smoke Tests', () => {
     await expect(page.getByRole('button', { name: '削除' })).toBeVisible();
     
     // Check navigation back works
-    await expect(page.getByText('ユーザー管理に戻る')).toBeVisible();
+    await expect(page.getByText('ユーザー管理v2に戻る')).toBeVisible();
   });
 
   test('User edit page navigation and loads', async ({ page }) => {
@@ -81,7 +81,7 @@ test.describe('User Management - E2E Smoke Tests', () => {
     // Home -> Add User -> Back to Home
     await page.getByRole('button', { name: '追加' }).click();
     await expect(page).toHaveURL('/users/add');
-    await page.getByText('ユーザー管理に戻る').click();
+    await page.getByText('ユーザー管理v2に戻る').click();
     await expect(page).toHaveURL('/');
     
     // Home -> User Detail -> Edit -> Back to Detail -> Back to Home
@@ -97,7 +97,7 @@ test.describe('User Management - E2E Smoke Tests', () => {
       await page.getByText('ユーザー詳細に戻る').click();
       await expect(page).toHaveURL(/\/users\/[a-f0-9\-]+$/);
       
-      await page.getByText('ユーザー管理に戻る').click();
+      await page.getByText('ユーザー管理v2に戻る').click();
       await expect(page).toHaveURL('/');
     }
   });
@@ -125,7 +125,7 @@ test.describe('User Management - E2E Smoke Tests', () => {
     await page.waitForTimeout(1000);
     
     // Should handle gracefully (no crash)
-    await expect(page.getByRole('heading', { name: 'ユーザー管理' })).toBeVisible();
+    await expect(page.getByRole('heading', { name: 'ユーザー管理v2' })).toBeVisible();
   });
 
   test('Specific user detail page loads - ddc63b72-b8c4-4888-9fd2-c0a4d1c266cd', async ({ page }) => {
@@ -143,6 +143,6 @@ test.describe('User Management - E2E Smoke Tests', () => {
     await expect(page.getByRole('button', { name: '削除' })).toBeVisible();
     
     // Check navigation back works
-    await expect(page.getByText('ユーザー管理に戻る')).toBeVisible();
+    await expect(page.getByText('ユーザー管理v2に戻る')).toBeVisible();
   });
 });

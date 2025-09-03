@@ -121,7 +121,7 @@ export default function EditUser() {
             className="flex items-center gap-2 text-gray-600 hover:text-gray-800 transition-colors mb-4"
           >
             <ArrowLeft className="w-4 h-4" />
-            ユーザー管理に戻る
+            ユーザー管理v2に戻る
           </button>
           
           <div className="bg-red-50 border border-red-200 rounded-lg p-6 text-center">

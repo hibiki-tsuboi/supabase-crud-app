@@ -42,7 +42,7 @@ export default function AddUser() {
       setName('')
       setEmail('')
       
-      // 3秒後にユーザー管理画面に戻る
+      // 3秒後にユーザー管理v2画面に戻る
       setTimeout(() => {
         router.push('/')
       }, 3000)
@@ -65,7 +65,7 @@ export default function AddUser() {
             className="flex items-center gap-2 text-gray-600 hover:text-gray-800 transition-colors mb-4"
           >
             <ArrowLeft className="w-4 h-4" />
-            ユーザー管理に戻る
+            ユーザー管理v2に戻る
           </button>
           
           <div className="text-center">
@@ -87,7 +87,7 @@ export default function AddUser() {
         {success && (
           <div className="mb-6 p-4 bg-green-50 border border-green-200 rounded-lg">
             <p className="text-green-800">{success}</p>
-            <p className="text-green-600 text-sm mt-1">3秒後にユーザー管理画面に戻ります...</p>
+            <p className="text-green-600 text-sm mt-1">3秒後にユーザー管理v2画面に戻ります...</p>
           </div>
         )}
 
@@ -171,7 +171,7 @@ export default function AddUser() {
             </li>
             <li className="flex items-start gap-2">
               <span className="text-blue-600 mt-1">•</span>
-              追加が完了すると自動的にユーザー管理画面に戻ります
+              追加が完了すると自動的にユーザー管理v2画面に戻ります
             </li>
           </ul>
         </div>
