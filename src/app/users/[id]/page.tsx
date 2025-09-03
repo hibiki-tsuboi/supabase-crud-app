@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react'
 import { useRouter, useParams } from 'next/navigation'
-import { User, Mail, UserIcon, RefreshCw, ArrowLeft, Calendar, Eye, Trash2, Edit } from 'lucide-react'
+import { Mail, UserIcon, RefreshCw, ArrowLeft, Calendar, Eye, Trash2, Edit } from 'lucide-react'
 
 interface UserData {
   id: number
@@ -19,7 +19,7 @@ export default function UserDetail() {
   const [error, setError] = useState('')
   const [success, setSuccess] = useState('')
 
-  const userId = params.id as string
+  const userId = params?.id as string
 
   // ユーザー詳細を取得
   const fetchUser = async () => {

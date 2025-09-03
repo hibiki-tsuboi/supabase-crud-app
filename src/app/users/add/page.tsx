@@ -2,7 +2,7 @@
 
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
-import { User, Plus, Mail, UserIcon, RefreshCw, ArrowLeft } from 'lucide-react'
+import { Plus, Mail, UserIcon, RefreshCw, ArrowLeft } from 'lucide-react'
 
 export default function AddUser() {
   const router = useRouter()

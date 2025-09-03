@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react'
 import { useRouter, useParams } from 'next/navigation'
-import { User, Mail, UserIcon, RefreshCw, ArrowLeft, Save, X } from 'lucide-react'
+import { Mail, UserIcon, RefreshCw, ArrowLeft, Save, X } from 'lucide-react'
 
 interface UserData {
   id: number
@@ -22,7 +22,7 @@ export default function EditUser() {
   const [error, setError] = useState('')
   const [success, setSuccess] = useState('')
 
-  const userId = params.id as string
+  const userId = params?.id as string
 
   // ユーザー詳細を取得
   const fetchUser = async () => {
@@ -222,7 +222,7 @@ export default function EditUser() {
                   />
                   {name !== user.name && (
                     <p className="text-sm text-orange-600 mt-1">
-                      変更: "{user.name}" → "{name}"
+                      変更: &quot;{user.name}&quot; → &quot;{name}&quot;
                     </p>
                   )}
                 </div>
@@ -243,7 +243,7 @@ export default function EditUser() {
                   />
                   {email !== user.email && (
                     <p className="text-sm text-orange-600 mt-1">
-                      変更: "{user.email}" → "{email}"
+                      変更: &quot;{user.email}&quot; → &quot;{email}&quot;
                     </p>
                   )}
                 </div>
