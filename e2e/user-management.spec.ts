@@ -135,8 +135,8 @@ test.describe('User Management - E2E Smoke Tests', () => {
     // Check detail page loads
     await expect(page.getByRole('heading', { name: 'ユーザー詳細' })).toBeVisible();
     
-    // Check that user name "Tsuboi" is displayed
-    await expect(page.locator('h2').filter({ hasText: 'Tsuboi' })).toBeVisible();
+    // Check that user name "Tsuboi" is displayed (exact match)
+    await expect(page.locator('h2').filter({ hasText: /^Tsuboi$/ })).toBeVisible();
     
     // Check action buttons are present
     await expect(page.getByRole('button', { name: '編集' })).toBeVisible();
