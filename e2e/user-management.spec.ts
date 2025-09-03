@@ -7,7 +7,7 @@ test.describe('User Management - E2E Smoke Tests', () => {
 
   test('Home page loads successfully', async ({ page }) => {
     // Check page loads
-    await expect(page).toHaveTitle(/Create Next App/);
+    await expect(page).toHaveTitle(/FUGA/);
     await expect(page.getByRole('heading', { name: 'ユーザー管理' })).toBeVisible();
     
     // Check main components are present
