@@ -7,8 +7,8 @@ test.describe('User Management - E2E Smoke Tests', () => {
 
   test('Home page loads successfully', async ({ page }) => {
     // Check page loads
-    await expect(page).toHaveTitle(/Create Next App/);
-    await expect(page.getByRole('heading', { name: 'ユーザー管理' })).toBeVisible();
+    await expect(page).toHaveTitle(/HOGE/);
+    await expect(page.getByRole('heading', { name: 'HOGE' })).toBeVisible();
     
     // Check main components are present
     await expect(page.getByRole('heading', { name: 'ユーザー一覧' })).toBeVisible();
@@ -125,7 +125,7 @@ test.describe('User Management - E2E Smoke Tests', () => {
     await page.waitForTimeout(1000);
     
     // Should handle gracefully (no crash)
-    await expect(page.getByRole('heading', { name: 'ユーザー管理' })).toBeVisible();
+    await expect(page.getByRole('heading', { name: 'HOGE' })).toBeVisible();
   });
 
   test('Specific user detail page loads - ddc63b72-b8c4-4888-9fd2-c0a4d1c266cd', async ({ page }) => {
