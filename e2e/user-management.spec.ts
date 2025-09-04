@@ -9,7 +9,7 @@ test.describe('User Management - E2E Smoke Tests', () => {
     // Check page loads
     await expect(page).toHaveTitle(/Create Next App/)
     await expect(
-      page.getByRole('heading', { name: 'ユーザー管理' })
+      page.getByRole('heading', { name: 'ユーザー管理v3' })
     ).toBeVisible()
 
     // Check main components are present
@@ -37,7 +37,7 @@ test.describe('User Management - E2E Smoke Tests', () => {
     ).toBeVisible()
 
     // Check navigation back works
-    await expect(page.getByText('ユーザー管理に戻る')).toBeVisible()
+    await expect(page.getByText('ユーザー管理v3に戻る')).toBeVisible()
   })
 
   test('User detail page navigation and loads', async ({ page }) => {
@@ -60,7 +60,7 @@ test.describe('User Management - E2E Smoke Tests', () => {
     await expect(page.getByRole('button', { name: '削除' })).toBeVisible()
 
     // Check navigation back works
-    await expect(page.getByText('ユーザー管理に戻る')).toBeVisible()
+    await expect(page.getByText('ユーザー管理v3に戻る')).toBeVisible()
   })
 
   test('User edit page navigation and loads', async ({ page }) => {
@@ -95,7 +95,7 @@ test.describe('User Management - E2E Smoke Tests', () => {
     // Home -> Add User -> Back to Home
     await page.getByRole('button', { name: '追加' }).click()
     await expect(page).toHaveURL('/users/add')
-    await page.getByText('ユーザー管理に戻る').click()
+    await page.getByText('ユーザー管理v3に戻る').click()
     await expect(page).toHaveURL('/')
 
     // Home -> User Detail -> Edit -> Back to Detail -> Back to Home
@@ -111,7 +111,7 @@ test.describe('User Management - E2E Smoke Tests', () => {
       await page.getByText('ユーザー詳細に戻る').click()
       await expect(page).toHaveURL(/\/users\/[a-f0-9\-]+$/)
 
-      await page.getByText('ユーザー管理に戻る').click()
+      await page.getByText('ユーザー管理v3に戻る').click()
       await expect(page).toHaveURL('/')
     }
   })
@@ -140,7 +140,7 @@ test.describe('User Management - E2E Smoke Tests', () => {
 
     // Should handle gracefully (no crash)
     await expect(
-      page.getByRole('heading', { name: 'ユーザー管理' })
+      page.getByRole('heading', { name: 'ユーザー管理v3' })
     ).toBeVisible()
   })
 
@@ -165,6 +165,6 @@ test.describe('User Management - E2E Smoke Tests', () => {
     await expect(page.getByRole('button', { name: '削除' })).toBeVisible()
 
     // Check navigation back works
-    await expect(page.getByText('ユーザー管理に戻る')).toBeVisible()
+    await expect(page.getByText('ユーザー管理v3に戻る')).toBeVisible()
   })
 })
