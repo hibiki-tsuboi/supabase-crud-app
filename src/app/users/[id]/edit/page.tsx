@@ -1,8 +1,8 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import { useRouter, useParams } from 'next/navigation'
-import { User, Mail, UserIcon, RefreshCw, ArrowLeft, Save, X } from 'lucide-react'
+import { Mail, UserIcon, RefreshCw, ArrowLeft, Save, X } from 'lucide-react'
 
 interface UserData {
   id: number
@@ -25,7 +25,7 @@ export default function EditUser() {
   const userId = params.id as string
 
   // ユーザー詳細を取得
-  const fetchUser = async () => {
+  const fetchUser = useCallback(async () => {
     setLoading(true)
     setError('')
     try {
@@ -47,7 +47,7 @@ export default function EditUser() {
     } finally {
       setLoading(false)
     }
-  }
+  }, [userId])
 
   // ユーザーを更新
   const updateUser = async (e: React.FormEvent) => {
@@ -67,10 +67,10 @@ export default function EditUser() {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ 
+        body: JSON.stringify({
           id: userId,
-          name: name.trim(), 
-          email: email.trim() 
+          name: name.trim(),
+          email: email.trim(),
         }),
       })
 
@@ -80,13 +80,14 @@ export default function EditUser() {
       }
 
       setSuccess('ユーザーが正常に更新されました！')
-      
+
       // 3秒後にユーザー詳細画面に戻る
       setTimeout(() => {
         router.push(`/users/${userId}`)
       }, 3000)
     } catch (err) {
-      const errorMessage = err instanceof Error ? err.message : 'ユーザーの更新に失敗しました'
+      const errorMessage =
+        err instanceof Error ? err.message : 'ユーザーの更新に失敗しました'
       setError(errorMessage)
       console.error('Error updating user:', err)
     } finally {
@@ -98,7 +99,7 @@ export default function EditUser() {
     if (userId) {
       fetchUser()
     }
-  }, [userId])
+  }, [userId, fetchUser])
 
   if (loading) {
     return (
@@ -123,7 +124,7 @@ export default function EditUser() {
             <ArrowLeft className="w-4 h-4" />
             ユーザー管理に戻る
           </button>
-          
+
           <div className="bg-red-50 border border-red-200 rounded-lg p-6 text-center">
             <p className="text-red-800 text-lg">{error}</p>
             <button
@@ -150,7 +151,7 @@ export default function EditUser() {
             <ArrowLeft className="w-4 h-4" />
             ユーザー詳細に戻る
           </button>
-          
+
           <div className="text-center">
             <div className="flex justify-center items-center gap-3 mb-4">
               <div className="p-3 bg-orange-600 rounded-xl">
@@ -170,7 +171,9 @@ export default function EditUser() {
         {success && (
           <div className="mb-6 p-4 bg-green-50 border border-green-200 rounded-lg">
             <p className="text-green-800">{success}</p>
-            <p className="text-green-600 text-sm mt-1">3秒後にユーザー詳細画面に戻ります...</p>
+            <p className="text-green-600 text-sm mt-1">
+              3秒後にユーザー詳細画面に戻ります...
+            </p>
           </div>
         )}
 
@@ -178,22 +181,32 @@ export default function EditUser() {
           <div className="space-y-6">
             {/* 現在の情報表示 */}
             <div className="bg-blue-50 rounded-xl border border-blue-200 p-6">
-              <h3 className="text-lg font-semibold text-blue-900 mb-3">現在の情報</h3>
+              <h3 className="text-lg font-semibold text-blue-900 mb-3">
+                現在の情報
+              </h3>
               <div className="grid md:grid-cols-2 gap-4">
                 <div>
-                  <span className="text-sm font-medium text-blue-800">名前:</span>
+                  <span className="text-sm font-medium text-blue-800">
+                    名前:
+                  </span>
                   <p className="text-blue-900 font-semibold">{user.name}</p>
                 </div>
                 <div>
-                  <span className="text-sm font-medium text-blue-800">メールアドレス:</span>
+                  <span className="text-sm font-medium text-blue-800">
+                    メールアドレス:
+                  </span>
                   <p className="text-blue-900 font-semibold">{user.email}</p>
                 </div>
                 <div>
-                  <span className="text-sm font-medium text-blue-800">ユーザーID:</span>
+                  <span className="text-sm font-medium text-blue-800">
+                    ユーザーID:
+                  </span>
                   <p className="text-blue-900 font-semibold">{user.id}</p>
                 </div>
                 <div>
-                  <span className="text-sm font-medium text-blue-800">作成日:</span>
+                  <span className="text-sm font-medium text-blue-800">
+                    作成日:
+                  </span>
                   <p className="text-blue-900 font-semibold">
                     {new Date(user.created_at).toLocaleDateString('ja-JP')}
                   </p>
@@ -203,11 +216,16 @@ export default function EditUser() {
 
             {/* 編集フォーム */}
             <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-8">
-              <h3 className="text-lg font-semibold text-gray-900 mb-6">新しい情報を入力</h3>
-              
+              <h3 className="text-lg font-semibold text-gray-900 mb-6">
+                新しい情報を入力
+              </h3>
+
               <form onSubmit={updateUser} className="space-y-6">
                 <div>
-                  <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-3">
+                  <label
+                    htmlFor="name"
+                    className="block text-sm font-medium text-gray-700 mb-3"
+                  >
                     <UserIcon className="w-4 h-4 inline mr-2" />
                     名前
                   </label>
@@ -215,20 +233,23 @@ export default function EditUser() {
                     type="text"
                     id="name"
                     value={name}
-                    onChange={(e) => setName(e.target.value)}
+                    onChange={e => setName(e.target.value)}
                     className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-colors text-lg"
                     placeholder="田中太郎"
                     required
                   />
                   {name !== user.name && (
                     <p className="text-sm text-orange-600 mt-1">
-                      変更: "{user.name}" → "{name}"
+                      変更: &quot;{user.name}&quot; → &quot;{name}&quot;
                     </p>
                   )}
                 </div>
-                
+
                 <div>
-                  <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-3">
+                  <label
+                    htmlFor="email"
+                    className="block text-sm font-medium text-gray-700 mb-3"
+                  >
                     <Mail className="w-4 h-4 inline mr-2" />
                     メールアドレス
                   </label>
@@ -236,18 +257,18 @@ export default function EditUser() {
                     type="email"
                     id="email"
                     value={email}
-                    onChange={(e) => setEmail(e.target.value)}
+                    onChange={e => setEmail(e.target.value)}
                     className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-colors text-lg"
                     placeholder="example@example.com"
                     required
                   />
                   {email !== user.email && (
                     <p className="text-sm text-orange-600 mt-1">
-                      変更: "{user.email}" → "{email}"
+                      変更: &quot;{user.email}&quot; → &quot;{email}&quot;
                     </p>
                   )}
                 </div>
-                
+
                 <div className="flex flex-col sm:flex-row gap-4 pt-4">
                   <button
                     type="button"
@@ -257,10 +278,13 @@ export default function EditUser() {
                     <X className="w-4 h-4" />
                     キャンセル
                   </button>
-                  
+
                   <button
                     type="submit"
-                    disabled={formLoading || (name === user.name && email === user.email)}
+                    disabled={
+                      formLoading ||
+                      (name === user.name && email === user.email)
+                    }
                     className="flex-1 bg-orange-600 text-white py-3 px-4 rounded-lg hover:bg-orange-700 focus:ring-2 focus:ring-orange-500 focus:ring-offset-2 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
                   >
                     {formLoading ? (
@@ -281,7 +305,9 @@ export default function EditUser() {
 
             {/* 注意事項 */}
             <div className="bg-yellow-50 rounded-xl border border-yellow-200 p-6">
-              <h3 className="text-lg font-semibold text-yellow-900 mb-3">注意事項</h3>
+              <h3 className="text-lg font-semibold text-yellow-900 mb-3">
+                注意事項
+              </h3>
               <ul className="space-y-2 text-yellow-800">
                 <li className="flex items-start gap-2">
                   <span className="text-yellow-600 mt-1">•</span>

@@ -1,8 +1,17 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import { useRouter, useParams } from 'next/navigation'
-import { User, Mail, UserIcon, RefreshCw, ArrowLeft, Calendar, Eye, Trash2, Edit } from 'lucide-react'
+import {
+  Mail,
+  UserIcon,
+  RefreshCw,
+  ArrowLeft,
+  Calendar,
+  Eye,
+  Trash2,
+  Edit,
+} from 'lucide-react'
 
 interface UserData {
   id: number
@@ -22,7 +31,7 @@ export default function UserDetail() {
   const userId = params.id as string
 
   // ユーザー詳細を取得
-  const fetchUser = async () => {
+  const fetchUser = useCallback(async () => {
     setLoading(true)
     setError('')
     try {
@@ -41,7 +50,7 @@ export default function UserDetail() {
     } finally {
       setLoading(false)
     }
-  }
+  }, [userId])
 
   // ユーザーを削除
   const deleteUser = async () => {
@@ -49,7 +58,9 @@ export default function UserDetail() {
     setError('')
     setSuccess('')
     try {
-      const response = await fetch(`/api/users?id=${userId}`, { method: 'DELETE' })
+      const response = await fetch(`/api/users?id=${userId}`, {
+        method: 'DELETE',
+      })
       if (!response.ok) {
         const errorData = await response.json()
         throw new Error(errorData.error || 'Failed to delete user')
@@ -59,7 +70,8 @@ export default function UserDetail() {
         router.push('/')
       }, 2000)
     } catch (err) {
-      const errorMessage = err instanceof Error ? err.message : 'ユーザーの削除に失敗しました'
+      const errorMessage =
+        err instanceof Error ? err.message : 'ユーザーの削除に失敗しました'
       setError(errorMessage)
       console.error('Error deleting user:', err)
     }
@@ -69,7 +81,7 @@ export default function UserDetail() {
     if (userId) {
       fetchUser()
     }
-  }, [userId])
+  }, [userId, fetchUser])
 
   if (loading) {
     return (
@@ -94,7 +106,7 @@ export default function UserDetail() {
             <ArrowLeft className="w-4 h-4" />
             ユーザー管理に戻る
           </button>
-          
+
           <div className="bg-red-50 border border-red-200 rounded-lg p-6 text-center">
             <p className="text-red-800 text-lg">{error}</p>
             <button
@@ -121,7 +133,7 @@ export default function UserDetail() {
             <ArrowLeft className="w-4 h-4" />
             ユーザー管理に戻る
           </button>
-          
+
           <div className="text-center">
             <div className="flex justify-center items-center gap-3 mb-4">
               <div className="p-3 bg-blue-600 rounded-xl">
@@ -141,7 +153,9 @@ export default function UserDetail() {
         {success && (
           <div className="mb-6 p-4 bg-green-50 border border-green-200 rounded-lg">
             <p className="text-green-800">{success}</p>
-            <p className="text-green-600 text-sm mt-1">2秒後にユーザー管理画面に戻ります...</p>
+            <p className="text-green-600 text-sm mt-1">
+              2秒後にユーザー管理画面に戻ります...
+            </p>
           </div>
         )}
 
@@ -154,7 +168,9 @@ export default function UserDetail() {
                   <UserIcon className="w-8 h-8 text-gray-600" />
                 </div>
                 <div>
-                  <h2 className="text-2xl font-bold text-gray-900">{user.name}</h2>
+                  <h2 className="text-2xl font-bold text-gray-900">
+                    {user.name}
+                  </h2>
                   <p className="text-gray-600 flex items-center gap-2 mt-1">
                     <Mail className="w-4 h-4" />
                     {user.email}
@@ -166,7 +182,9 @@ export default function UserDetail() {
                 <div className="bg-gray-50 rounded-lg p-4">
                   <div className="flex items-center gap-2 mb-2">
                     <UserIcon className="w-5 h-5 text-gray-600" />
-                    <span className="font-medium text-gray-900">ユーザーID</span>
+                    <span className="font-medium text-gray-900">
+                      ユーザーID
+                    </span>
                   </div>
                   <p className="text-gray-700 text-lg">{user.id}</p>
                 </div>
@@ -182,7 +200,7 @@ export default function UserDetail() {
                       month: 'long',
                       day: 'numeric',
                       hour: '2-digit',
-                      minute: '2-digit'
+                      minute: '2-digit',
                     })}
                   </p>
                 </div>
@@ -190,7 +208,9 @@ export default function UserDetail() {
                 <div className="bg-gray-50 rounded-lg p-4">
                   <div className="flex items-center gap-2 mb-2">
                     <Mail className="w-5 h-5 text-gray-600" />
-                    <span className="font-medium text-gray-900">メールドメイン</span>
+                    <span className="font-medium text-gray-900">
+                      メールドメイン
+                    </span>
                   </div>
                   <p className="text-gray-700">@{user.email.split('@')[1]}</p>
                 </div>
@@ -198,7 +218,9 @@ export default function UserDetail() {
                 <div className="bg-gray-50 rounded-lg p-4">
                   <div className="flex items-center gap-2 mb-2">
                     <UserIcon className="w-5 h-5 text-gray-600" />
-                    <span className="font-medium text-gray-900">名前の長さ</span>
+                    <span className="font-medium text-gray-900">
+                      名前の長さ
+                    </span>
                   </div>
                   <p className="text-gray-700">{user.name.length}文字</p>
                 </div>
@@ -207,7 +229,9 @@ export default function UserDetail() {
 
             {/* アクションボタン */}
             <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
-              <h3 className="text-lg font-semibold text-gray-900 mb-4">アクション</h3>
+              <h3 className="text-lg font-semibold text-gray-900 mb-4">
+                アクション
+              </h3>
               <div className="flex flex-col sm:flex-row gap-3">
                 <button
                   onClick={() => router.push(`/users/${user.id}/edit`)}
@@ -216,7 +240,7 @@ export default function UserDetail() {
                   <Edit className="w-4 h-4" />
                   編集
                 </button>
-                
+
                 <button
                   onClick={deleteUser}
                   className="flex-1 bg-red-600 text-white py-3 px-4 rounded-lg hover:bg-red-700 transition-colors flex items-center justify-center gap-2"
@@ -229,10 +253,14 @@ export default function UserDetail() {
 
             {/* システム情報 */}
             <div className="bg-blue-50 rounded-xl border border-blue-200 p-6">
-              <h3 className="text-lg font-semibold text-blue-900 mb-3">システム情報</h3>
+              <h3 className="text-lg font-semibold text-blue-900 mb-3">
+                システム情報
+              </h3>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
                 <div>
-                  <span className="font-medium text-blue-800">データベース:</span>
+                  <span className="font-medium text-blue-800">
+                    データベース:
+                  </span>
                   <span className="text-blue-700 ml-2">Supabase</span>
                 </div>
                 <div>

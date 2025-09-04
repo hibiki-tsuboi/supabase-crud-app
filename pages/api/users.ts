@@ -1,12 +1,17 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
 import { supabase } from '../../lib/supabaseClient'
 
-export default async function handler(req: NextApiRequest, res: NextApiResponse) {
+export default async function handler(
+  req: NextApiRequest,
+  res: NextApiResponse
+) {
   console.log('[handler]start')
   console.log('[handler]environment check:', {
     hasSupabaseUrl: !!process.env.NEXT_PUBLIC_SUPABASE_URL,
     hasSupabaseKey: !!process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY,
-    supabaseUrl: process.env.NEXT_PUBLIC_SUPABASE_URL ? 'configured' : 'missing'
+    supabaseUrl: process.env.NEXT_PUBLIC_SUPABASE_URL
+      ? 'configured'
+      : 'missing',
   })
 
   if (req.method === 'GET') {
@@ -14,11 +19,11 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     try {
       const { id } = req.query
       let query = supabase.from('users').select('*')
-      
+
       if (id && !Array.isArray(id)) {
         query = query.eq('id', id)
       }
-      
+
       const { data, error } = await query
       console.log('[handler]supabase response:', { data, error })
       if (error) {
@@ -36,7 +41,9 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     console.log('[handler]POST')
     const { name, email } = req.body
     try {
-      const { data, error } = await supabase.from('users').insert([{ name, email }])
+      const { data, error } = await supabase
+        .from('users')
+        .insert([{ name, email }])
       console.log('[handler]supabase insert response:', { data, error })
       if (error) {
         console.error('[handler]supabase insert error:', error)

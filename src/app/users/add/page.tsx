@@ -2,7 +2,7 @@
 
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
-import { User, Plus, Mail, UserIcon, RefreshCw, ArrowLeft } from 'lucide-react'
+import { Plus, Mail, UserIcon, RefreshCw, ArrowLeft } from 'lucide-react'
 
 export default function AddUser() {
   const router = useRouter()
@@ -41,13 +41,14 @@ export default function AddUser() {
       setSuccess('ユーザーが正常に追加されました！')
       setName('')
       setEmail('')
-      
+
       // 3秒後にユーザー管理画面に戻る
       setTimeout(() => {
         router.push('/')
       }, 3000)
     } catch (err) {
-      const errorMessage = err instanceof Error ? err.message : 'ユーザーの追加に失敗しました'
+      const errorMessage =
+        err instanceof Error ? err.message : 'ユーザーの追加に失敗しました'
       setError(errorMessage)
       console.error('Error adding user:', err)
     } finally {
@@ -67,13 +68,15 @@ export default function AddUser() {
             <ArrowLeft className="w-4 h-4" />
             ユーザー管理に戻る
           </button>
-          
+
           <div className="text-center">
             <div className="flex justify-center items-center gap-3 mb-4">
               <div className="p-3 bg-green-600 rounded-xl">
                 <Plus className="w-8 h-8 text-white" />
               </div>
-              <h1 className="text-4xl font-bold text-gray-900">新しいユーザーを追加</h1>
+              <h1 className="text-4xl font-bold text-gray-900">
+                新しいユーザーを追加
+              </h1>
             </div>
           </div>
         </div>
@@ -87,7 +90,9 @@ export default function AddUser() {
         {success && (
           <div className="mb-6 p-4 bg-green-50 border border-green-200 rounded-lg">
             <p className="text-green-800">{success}</p>
-            <p className="text-green-600 text-sm mt-1">3秒後にユーザー管理画面に戻ります...</p>
+            <p className="text-green-600 text-sm mt-1">
+              3秒後にユーザー管理画面に戻ります...
+            </p>
           </div>
         )}
 
@@ -95,7 +100,10 @@ export default function AddUser() {
         <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-8">
           <form onSubmit={addUser} className="space-y-6">
             <div>
-              <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-3">
+              <label
+                htmlFor="name"
+                className="block text-sm font-medium text-gray-700 mb-3"
+              >
                 <UserIcon className="w-4 h-4 inline mr-2" />
                 名前
               </label>
@@ -103,15 +111,18 @@ export default function AddUser() {
                 type="text"
                 id="name"
                 value={name}
-                onChange={(e) => setName(e.target.value)}
+                onChange={e => setName(e.target.value)}
                 className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-colors text-lg"
                 placeholder="田中太郎"
                 required
               />
             </div>
-            
+
             <div>
-              <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-3">
+              <label
+                htmlFor="email"
+                className="block text-sm font-medium text-gray-700 mb-3"
+              >
                 <Mail className="w-4 h-4 inline mr-2" />
                 メールアドレス
               </label>
@@ -119,13 +130,13 @@ export default function AddUser() {
                 type="email"
                 id="email"
                 value={email}
-                onChange={(e) => setEmail(e.target.value)}
+                onChange={e => setEmail(e.target.value)}
                 className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-colors text-lg"
                 placeholder="example@example.com"
                 required
               />
             </div>
-            
+
             <div className="flex gap-4 pt-4">
               <button
                 type="button"
@@ -135,7 +146,7 @@ export default function AddUser() {
                 <ArrowLeft className="w-4 h-4" />
                 キャンセル
               </button>
-              
+
               <button
                 type="submit"
                 disabled={formLoading}

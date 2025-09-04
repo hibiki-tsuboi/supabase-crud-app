@@ -37,7 +37,6 @@ export default function Home() {
     }
   }
 
-
   // ユーザーを削除
   const deleteUser = async (id: number) => {
     if (!confirm('このユーザーを削除しますか？')) return
@@ -52,7 +51,8 @@ export default function Home() {
       setSuccess('ユーザーを削除しました')
       fetchUsers()
     } catch (err) {
-      const errorMessage = err instanceof Error ? err.message : 'ユーザーの削除に失敗しました'
+      const errorMessage =
+        err instanceof Error ? err.message : 'ユーザーの削除に失敗しました'
       setError(errorMessage)
       console.error('Error deleting user:', err)
     }
@@ -88,89 +88,97 @@ export default function Home() {
           </div>
         )}
 
-
         {/* ユーザー一覧 */}
         <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
-            <div className="flex items-center justify-between mb-6">
-              <div className="flex items-center gap-3">
-                <div className="p-2 bg-blue-100 rounded-lg">
-                  <User className="w-5 h-5 text-blue-600" />
-                </div>
-                <h2 className="text-xl font-semibold text-gray-900">ユーザー一覧</h2>
+          <div className="flex items-center justify-between mb-6">
+            <div className="flex items-center gap-3">
+              <div className="p-2 bg-blue-100 rounded-lg">
+                <User className="w-5 h-5 text-blue-600" />
               </div>
-              <div className="flex items-center gap-2">
-                <button
-                  onClick={() => router.push('/users/add')}
-                  className="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 transition-colors flex items-center gap-2"
-                >
-                  <Plus className="w-4 h-4" />
-                  追加
-                </button>
-                <button
-                  onClick={fetchUsers}
-                  disabled={loading}
-                  className="p-2 text-gray-500 hover:text-gray-700 hover:bg-gray-100 rounded-lg transition-colors disabled:opacity-50"
-                  title="更新"
-                >
-                  <RefreshCw className={`w-5 h-5 ${loading ? 'animate-spin' : ''}`} />
-                </button>
-              </div>
+              <h2 className="text-xl font-semibold text-gray-900">
+                ユーザー一覧
+              </h2>
             </div>
+            <div className="flex items-center gap-2">
+              <button
+                onClick={() => router.push('/users/add')}
+                className="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 transition-colors flex items-center gap-2"
+              >
+                <Plus className="w-4 h-4" />
+                追加
+              </button>
+              <button
+                onClick={fetchUsers}
+                disabled={loading}
+                className="p-2 text-gray-500 hover:text-gray-700 hover:bg-gray-100 rounded-lg transition-colors disabled:opacity-50"
+                title="更新"
+              >
+                <RefreshCw
+                  className={`w-5 h-5 ${loading ? 'animate-spin' : ''}`}
+                />
+              </button>
+            </div>
+          </div>
 
-            {loading ? (
-              <div className="flex justify-center items-center py-12">
-                <RefreshCw className="w-8 h-8 animate-spin text-indigo-600" />
-              </div>
-            ) : users.length === 0 ? (
-              <div className="text-center py-12">
-                <User className="w-12 h-12 text-gray-300 mx-auto mb-4" />
-                <p className="text-gray-500">まだユーザーが登録されていません</p>
-                <p className="text-sm text-gray-400 mt-1">上のボタンから新しいユーザーを追加してください</p>
-              </div>
-            ) : (
-              <div className="space-y-3">
-                {users.map((user) => (
-                  <div
-                    key={user.id}
-                    onClick={() => router.push(`/users/${user.id}`)}
-                    className="p-4 border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors cursor-pointer"
-                  >
-                    <div className="flex items-center justify-between">
-                      <div className="flex items-center gap-3">
-                        <div className="p-2 bg-gray-100 rounded-full">
-                          <UserIcon className="w-4 h-4 text-gray-600" />
-                        </div>
-                        <div>
-                          <h3 className="font-medium text-gray-900">{user.name}</h3>
-                          <p className="text-sm text-gray-500 flex items-center gap-1">
-                            <Mail className="w-3 h-3" />
-                            {user.email}
-                          </p>
-                        </div>
+          {loading ? (
+            <div className="flex justify-center items-center py-12">
+              <RefreshCw className="w-8 h-8 animate-spin text-indigo-600" />
+            </div>
+          ) : users.length === 0 ? (
+            <div className="text-center py-12">
+              <User className="w-12 h-12 text-gray-300 mx-auto mb-4" />
+              <p className="text-gray-500">まだユーザーが登録されていません</p>
+              <p className="text-sm text-gray-400 mt-1">
+                上のボタンから新しいユーザーを追加してください
+              </p>
+            </div>
+          ) : (
+            <div className="space-y-3">
+              {users.map(user => (
+                <div
+                  key={user.id}
+                  onClick={() => router.push(`/users/${user.id}`)}
+                  className="p-4 border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors cursor-pointer"
+                >
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-3">
+                      <div className="p-2 bg-gray-100 rounded-full">
+                        <UserIcon className="w-4 h-4 text-gray-600" />
                       </div>
-                      <div className="flex items-center gap-2 text-xs text-gray-400">
-                        <span>ID: {user.id}</span>
-                        <button
-                          onClick={(e) => {
-                            e.stopPropagation()
-                            deleteUser(user.id)
-                          }}
-                          className="p-1 text-red-500 hover:bg-red-50 rounded"
-                          title="削除"
-                        >
-                          <Trash2 className="w-4 h-4" />
-                        </button>
+                      <div>
+                        <h3 className="font-medium text-gray-900">
+                          {user.name}
+                        </h3>
+                        <p className="text-sm text-gray-500 flex items-center gap-1">
+                          <Mail className="w-3 h-3" />
+                          {user.email}
+                        </p>
                       </div>
                     </div>
-                    {user.created_at && (
-                      <div className="mt-2 text-xs text-gray-400">
-                        作成日: {new Date(user.created_at).toLocaleString('ja-JP')}
-                      </div>
-                    )}
+                    <div className="flex items-center gap-2 text-xs text-gray-400">
+                      <span>ID: {user.id}</span>
+                      <button
+                        onClick={e => {
+                          e.stopPropagation()
+                          deleteUser(user.id)
+                        }}
+                        className="p-1 text-red-500 hover:bg-red-50 rounded"
+                        title="削除"
+                      >
+                        <Trash2 className="w-4 h-4" />
+                      </button>
+                    </div>
                   </div>
-                ))}
-              </div>
-            )}
+                  {user.created_at && (
+                    <div className="mt-2 text-xs text-gray-400">
+                      作成日:{' '}
+                      {new Date(user.created_at).toLocaleString('ja-JP')}
+                    </div>
+                  )}
+                </div>
+              ))}
+            </div>
+          )}
         </div>
 
         {/* 統計情報 */}
@@ -180,23 +188,33 @@ export default function Home() {
             <div className="bg-blue-50 p-4 rounded-lg">
               <div className="flex items-center gap-2">
                 <User className="w-5 h-5 text-blue-600" />
-                <span className="text-sm font-medium text-blue-600">総ユーザー数</span>
+                <span className="text-sm font-medium text-blue-600">
+                  総ユーザー数
+                </span>
               </div>
-              <p className="text-2xl font-bold text-blue-900 mt-1">{users.length}</p>
+              <p className="text-2xl font-bold text-blue-900 mt-1">
+                {users.length}
+              </p>
             </div>
             <div className="bg-green-50 p-4 rounded-lg">
               <div className="flex items-center gap-2">
                 <Plus className="w-5 h-5 text-green-600" />
                 <span className="text-sm font-medium text-green-600">API</span>
               </div>
-              <p className="text-lg font-semibold text-green-900 mt-1">GET / POST / DELETE</p>
+              <p className="text-lg font-semibold text-green-900 mt-1">
+                GET / POST / DELETE
+              </p>
             </div>
             <div className="bg-purple-50 p-4 rounded-lg">
               <div className="flex items-center gap-2">
                 <RefreshCw className="w-5 h-5 text-purple-600" />
-                <span className="text-sm font-medium text-purple-600">データベース</span>
+                <span className="text-sm font-medium text-purple-600">
+                  データベース
+                </span>
               </div>
-              <p className="text-lg font-semibold text-purple-900 mt-1">Supabase</p>
+              <p className="text-lg font-semibold text-purple-900 mt-1">
+                Supabase
+              </p>
             </div>
           </div>
         </div>
