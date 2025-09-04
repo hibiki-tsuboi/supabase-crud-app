@@ -28,7 +28,7 @@ export default function UserDetail() {
   const [error, setError] = useState('')
   const [success, setSuccess] = useState('')
 
-  const userId = params.id as string
+  const userId = params?.id as string
 
   // ユーザー詳細を取得
   const fetchUser = useCallback(async () => {
