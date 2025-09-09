@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
-import { User, Plus, Mail, UserIcon, RefreshCw, Trash2 } from 'lucide-react'
+import { User, Plus, Mail, UserIcon, RefreshCw, Trash2, Clock } from 'lucide-react'
 
 interface UserData {
   id: number
@@ -100,6 +100,13 @@ export default function Home() {
               </h2>
             </div>
             <div className="flex items-center gap-2">
+              <button
+                onClick={() => router.push('/stopwatch')}
+                className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors flex items-center gap-2"
+              >
+                <Clock className="w-4 h-4" />
+                ストップウォッチ
+              </button>
               <button
                 onClick={() => router.push('/users/add')}
                 className="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 transition-colors flex items-center gap-2"
