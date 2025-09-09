@@ -1,7 +1,7 @@
 'use client'
 
 import { useRouter } from 'next/navigation'
-import { Clock, Gamepad2, ArrowLeft, Sparkles, Grid3X3 } from 'lucide-react'
+import { Clock, Gamepad2, ArrowLeft, Sparkles, Grid3X3, Square } from 'lucide-react'
 
 export default function GameCenterPage() {
   const router = useRouter()
@@ -30,6 +30,14 @@ export default function GameCenterPage() {
       icon: Grid3X3,
       color: 'from-green-500 to-green-700',
       path: '/tic-tac-toe'
+    },
+    {
+      id: 'tetris',
+      title: 'テトリス',
+      description: '落ちてくるブロックを組み合わせるパズルゲーム',
+      icon: Square,
+      color: 'from-cyan-500 to-blue-700',
+      path: '/tetris'
     }
   ]
 
@@ -67,7 +75,7 @@ export default function GameCenterPage() {
         </div>
 
         {/* Games Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-7xl mx-auto">
           {games.map((game) => (
             <div
               key={game.id}
@@ -112,7 +120,7 @@ export default function GameCenterPage() {
           <h3 className="text-xl font-bold text-white mb-4">
             🚀 Coming Soon
           </h3>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 max-w-4xl mx-auto">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 max-w-4xl mx-auto">
             {['🎯 ダーツゲーム', '🃏 ブラックジャック'].map((game, index) => (
               <div
                 key={index}
