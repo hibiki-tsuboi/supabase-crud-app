@@ -1,9 +1,11 @@
 'use client'
 
 import { useState, useEffect, useRef } from 'react'
-import { Play, Pause, Square } from 'lucide-react'
+import { useRouter } from 'next/navigation'
+import { Play, Pause, Square, ArrowLeft } from 'lucide-react'
 
 export default function StopwatchPage() {
+  const router = useRouter()
   const [time, setTime] = useState(0)
   const [isRunning, setIsRunning] = useState(false)
   const intervalRef = useRef<NodeJS.Timeout | null>(null)
@@ -49,7 +51,15 @@ export default function StopwatchPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 py-12">
+    <div className="min-h-screen bg-gray-50 py-12 relative">
+      {/* Back Button */}
+      <button
+        onClick={() => router.push('/game-center')}
+        className="fixed top-4 left-4 p-2 bg-white hover:bg-gray-100 rounded-lg shadow-md transition-colors"
+      >
+        <ArrowLeft size={24} className="text-gray-600" />
+      </button>
+      
       <div className="max-w-md mx-auto bg-white rounded-lg shadow-lg p-8">
         <h1 className="text-3xl font-bold text-center mb-8 text-gray-800">
           ストップウォッチ

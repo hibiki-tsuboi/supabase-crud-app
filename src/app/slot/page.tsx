@@ -1,12 +1,14 @@
 'use client'
 
 import { useState, useRef } from 'react'
-import { Play, RotateCcw, Coins } from 'lucide-react'
+import { useRouter } from 'next/navigation'
+import { Play, RotateCcw, Coins, ArrowLeft } from 'lucide-react'
 
 const SYMBOLS = ['🍎', '🍌', '🍒', '🍇', '🍊', '⭐', '💎']
 const SPIN_DURATION = 2000
 
 export default function SlotMachinePage() {
+  const router = useRouter()
   const [reels, setReels] = useState([SYMBOLS[0], SYMBOLS[1], SYMBOLS[2]])
   const [isSpinning, setIsSpinning] = useState(false)
   const [score, setScore] = useState(1000)
@@ -106,7 +108,15 @@ export default function SlotMachinePage() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-purple-900 via-purple-800 to-pink-800 py-12">
+    <div className="min-h-screen bg-gradient-to-br from-purple-900 via-purple-800 to-pink-800 py-12 relative">
+      {/* Back Button */}
+      <button
+        onClick={() => router.push('/game-center')}
+        className="fixed top-4 left-4 p-2 bg-white/20 hover:bg-white/30 backdrop-blur-sm rounded-lg border border-white/30 transition-colors"
+      >
+        <ArrowLeft size={24} className="text-white" />
+      </button>
+      
       <div className="max-w-lg mx-auto bg-gradient-to-b from-yellow-400 to-yellow-600 rounded-2xl shadow-2xl p-8 border-4 border-yellow-300">
         <h1 className="text-4xl font-bold text-center mb-8 text-purple-900">
           🎰 スロットマシン

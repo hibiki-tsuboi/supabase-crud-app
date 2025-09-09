@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
-import { User, Plus, Mail, UserIcon, RefreshCw, Trash2, Clock, Gamepad2 } from 'lucide-react'
+import { User, Plus, Mail, UserIcon, RefreshCw, Trash2, Sparkles } from 'lucide-react'
 
 interface UserData {
   id: number
@@ -100,20 +100,6 @@ export default function Home() {
               </h2>
             </div>
             <div className="flex items-center gap-2">
-              <button
-                onClick={() => router.push('/slot')}
-                className="bg-purple-600 text-white px-4 py-2 rounded-lg hover:bg-purple-700 transition-colors flex items-center gap-2"
-              >
-                <Gamepad2 className="w-4 h-4" />
-                スロット
-              </button>
-              <button
-                onClick={() => router.push('/stopwatch')}
-                className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors flex items-center gap-2"
-              >
-                <Clock className="w-4 h-4" />
-                ストップウォッチ
-              </button>
               <button
                 onClick={() => router.push('/users/add')}
                 className="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 transition-colors flex items-center gap-2"
@@ -232,6 +218,15 @@ export default function Home() {
             </div>
           </div>
         </div>
+
+        {/* Hidden Game Center Button */}
+        <button
+          onClick={() => router.push('/game-center')}
+          className="fixed bottom-4 right-4 p-3 bg-gradient-to-r from-purple-600/80 to-pink-600/80 text-white rounded-full hover:from-purple-700 hover:to-pink-700 transition-all transform hover:scale-110 shadow-lg backdrop-blur-sm border border-white/20 opacity-70 hover:opacity-100"
+          title="隠しゲームセンター"
+        >
+          <Sparkles className="w-5 h-5" />
+        </button>
       </div>
     </div>
   )
