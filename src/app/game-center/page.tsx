@@ -1,7 +1,7 @@
 'use client'
 
 import { useRouter } from 'next/navigation'
-import { Clock, Gamepad2, ArrowLeft, Sparkles } from 'lucide-react'
+import { Clock, Gamepad2, ArrowLeft, Sparkles, Grid3X3 } from 'lucide-react'
 
 export default function GameCenterPage() {
   const router = useRouter()
@@ -13,7 +13,6 @@ export default function GameCenterPage() {
       description: '正確な時間測定ができるストップウォッチ機能',
       icon: Clock,
       color: 'from-blue-500 to-blue-700',
-      hoverColor: 'hover:from-blue-600 hover:to-blue-800',
       path: '/stopwatch'
     },
     {
@@ -22,8 +21,15 @@ export default function GameCenterPage() {
       description: '運試し！カジノ風スロットマシンゲーム',
       icon: Gamepad2,
       color: 'from-purple-500 to-purple-700',
-      hoverColor: 'hover:from-purple-600 hover:to-purple-800',
       path: '/slot'
+    },
+    {
+      id: 'tic-tac-toe',
+      title: 'マルバツゲーム',
+      description: 'AIと対戦できる三目並べゲーム',
+      icon: Grid3X3,
+      color: 'from-green-500 to-green-700',
+      path: '/tic-tac-toe'
     }
   ]
 
@@ -61,7 +67,7 @@ export default function GameCenterPage() {
         </div>
 
         {/* Games Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
           {games.map((game) => (
             <div
               key={game.id}
@@ -107,7 +113,7 @@ export default function GameCenterPage() {
             🚀 Coming Soon
           </h3>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4 max-w-4xl mx-auto">
-            {['🎯 ダーツゲーム', '🃏 ブラックジャック', '🎲 サイコロゲーム'].map((game, index) => (
+            {['🎯 ダーツゲーム', '🃏 ブラックジャック'].map((game, index) => (
               <div
                 key={index}
                 className="bg-white/10 backdrop-blur-sm border border-white/20 rounded-lg p-4"
