@@ -2,7 +2,16 @@
 
 import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
-import { User, Plus, Mail, UserIcon, RefreshCw, Trash2, Sparkles } from 'lucide-react'
+import {
+  User,
+  Plus,
+  Mail,
+  UserIcon,
+  RefreshCw,
+  Trash2,
+  Sparkles,
+  LineChart,
+} from 'lucide-react'
 
 interface UserData {
   id: number
@@ -99,19 +108,26 @@ export default function Home() {
                 ユーザー一覧
               </h2>
             </div>
-            <div className="flex items-center gap-2">
-              <button
-                onClick={() => router.push('/users/add')}
-                className="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 transition-colors flex items-center gap-2"
-              >
-                <Plus className="w-4 h-4" />
-                追加
-              </button>
-              <button
-                onClick={fetchUsers}
-                disabled={loading}
-                className="p-2 text-gray-500 hover:text-gray-700 hover:bg-gray-100 rounded-lg transition-colors disabled:opacity-50"
-                title="更新"
+          <div className="flex items-center gap-2">
+            <button
+              onClick={() => router.push('/users/add')}
+              className="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 transition-colors flex items-center gap-2"
+            >
+              <Plus className="w-4 h-4" />
+              追加
+            </button>
+            <button
+              onClick={() => router.push('/invest-simulator')}
+              className="bg-indigo-600 text-white px-4 py-2 rounded-lg hover:bg-indigo-700 transition-colors flex items-center gap-2"
+            >
+              <LineChart className="w-4 h-4" />
+              積立シミュレーター
+            </button>
+            <button
+              onClick={fetchUsers}
+              disabled={loading}
+              className="p-2 text-gray-500 hover:text-gray-700 hover:bg-gray-100 rounded-lg transition-colors disabled:opacity-50"
+              title="更新"
               >
                 <RefreshCw
                   className={`w-5 h-5 ${loading ? 'animate-spin' : ''}`}

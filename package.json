@@ -12,7 +12,8 @@
     "format:check": "prettier --check .",
     "test:e2e": "playwright test",
     "test:e2e:ui": "playwright test --ui",
-    "test:e2e:headed": "playwright test --headed"
+    "test:e2e:headed": "playwright test --headed",
+    "data:fetch:sp500": "node scripts/fetch-sp500.mjs"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.49.9",
